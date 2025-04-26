@@ -8,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.betondecken.trackingsystem.HomeActivity
 import com.betondecken.trackingsystem.R
 import com.betondecken.trackingsystem.ui.register.RegisterActivity
 import com.google.android.material.elevation.SurfaceColors
@@ -31,6 +32,11 @@ class LoginActivity : AppCompatActivity() {
         val forgotPasswordButton: View = findViewById(R.id.btnForgotPassword)
         forgotPasswordButton.setOnClickListener {
             Toast.makeText(this, "Un link para cambiar su password se ha enviado a su email.", Toast.LENGTH_SHORT).show()
+        }
+
+        val loginButton: View = findViewById(R.id.btnLogin)
+        loginButton.setOnClickListener {
+            startActivity(Intent(this, HomeActivity::class.java))
         }
     }
 

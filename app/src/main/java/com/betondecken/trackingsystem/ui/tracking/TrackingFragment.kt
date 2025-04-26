@@ -43,6 +43,15 @@ class TrackingFragment : Fragment() {
 //        homeViewModel.text.observe(viewLifecycleOwner) {
 //            textView.text = it
 //        }
+
+        val loginButton = binding.btnSearch
+        loginButton.setOnClickListener {
+            // pass the tracking code
+            val trackingCode = binding.txtTrackingCode.text.toString()
+            val intent = Intent(context, TrackingSingleActivity::class.java)
+            intent.putExtra("codigoDeSeguimiento", trackingCode)
+            startActivity(intent)
+        }
         return root
     }
 
