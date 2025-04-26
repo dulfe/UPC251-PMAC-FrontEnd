@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.betondecken.trackingsystem.ui.login.LoginActivity
+import com.betondecken.trackingsystem.ui.trackingsingle.TrackingSingleActivity
 
 class LauncherActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

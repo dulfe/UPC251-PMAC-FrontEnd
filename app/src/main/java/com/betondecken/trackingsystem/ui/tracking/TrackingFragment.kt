@@ -1,6 +1,7 @@
 package com.betondecken.trackingsystem.ui.tracking
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +11,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.betondecken.trackingsystem.HomeActivity
 import com.betondecken.trackingsystem.R
 import com.betondecken.trackingsystem.databinding.FragmentTrackingBinding
+import com.betondecken.trackingsystem.ui.trackingsingle.TrackingSingleActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class TrackingFragment : Fragment() {
@@ -65,6 +68,10 @@ class TrackingFragment : Fragment() {
             onItemClickListener  = { position ->
                 val clickedItem = trackingItems[position]
                 Toast.makeText(requireContext(), "Clicked: ${clickedItem.codigoDeSeguimiento}", Toast.LENGTH_SHORT).show()
+                // start activity
+                val intent = Intent(requireContext(), TrackingSingleActivity::class.java)
+                intent.putExtra("codigoDeSeguimiento", clickedItem.codigoDeSeguimiento)
+                startActivity(intent)
             }
         )
         binding.lstTrackingList.adapter = adapter

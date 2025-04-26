@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.trackingsingle.TrackingSingleActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/my_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/md_theme_primary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/ThemeOverlay.TrackingSystem.DayNight.Toolbar"
+            app:menu="@menu/top_app_bar"
+            app:title="@string/app_name" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16sp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/value_salida_estimada"
+                app:layout_constraintTop_toBottomOf="@+id/value_salida_estimada">
+
+                <TextView
+                    android:id="@+id/label_conductor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Conductor:"
+                    android:textSize="@dimen/tracking_card_label"
+                    android:textStyle="bold"
+
+
+                     />
+
+                <TextView
+                    android:id="@+id/value_conductor"
+                    android:layout_width="182dp"
+                    android:layout_height="wrap_content"
+                    android:text="Ricardo Castillo"
+                    android:textSize="@dimen/tracking_card_label"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/label_salida_estimada"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+
+                <TextView
+                    android:id="@+id/label_telefono"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Teléfono:"
+                    android:textSize="@dimen/tracking_card_label"
+                    android:textStyle="bold"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toStartOf="@+id/label_conductor"
+                    app:layout_constraintTop_toBottomOf="@+id/label_conductor"
+ />
+
+                <TextView
+                    android:id="@+id/value_telefono"
+                    android:layout_width="169dp"
+                    android:layout_height="wrap_content"
+                    android:text="999-999-999"
+                    android:textSize="@dimen/tracking_card_label"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toStartOf="@+id/value_conductor"
+                    app:layout_constraintTop_toBottomOf="@+id/value_conductor" />
+
+                <TextView
+                    android:id="@+id/label_salida"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Salida:"
+                    android:textSize="@dimen/tracking_card_label"
+                    android:textStyle="bold"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toStartOf="@+id/label_telefono"
+                    app:layout_constraintTop_toBottomOf="@+id/label_telefono"
+                    />
+
+                <TextView
+                    android:id="@+id/value_salida"
+                    android:layout_width="169dp"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre Fábrica"
+                    android:textSize="@dimen/tracking_card_label"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toStartOf="@+id/value_telefono"
+                    app:layout_constraintTop_toBottomOf="@+id/value_telefono" />
+
+                <TextView
+                    android:id="@+id/label_salida_estimada"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Salida Estimada:"
+                    android:textSize="@dimen/tracking_card_label"
+                    android:textStyle="bold"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toStartOf="@+id/label_salida"
+                    app:layout_constraintTop_toBottomOf="@+id/label_salida" />
+
+                <TextView
+                    android:id="@+id/value_salida_estimada"
+                    android:layout_width="169dp"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre Fábrica"
+                    android:textSize="@dimen/tracking_card_label"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toStartOf="@+id/value_salida"
+                    app:layout_constraintTop_toBottomOf="@+id/value_salida" />
+
+                <TextView
+                    android:id="@+id/label_llegada"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Llegada:"
+                    android:textSize="@dimen/tracking_card_label"
+                    android:textStyle="bold"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toStartOf="@+id/label_salida_estimada"
+                    app:layout_constraintTop_toBottomOf="@+id/label_salida_estimada" />
+
+                <TextView
+                    android:id="@+id/value_llegada"
+                    android:layout_width="169dp"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre Fábrica"
+                    android:textSize="@dimen/tracking_card_label"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toStartOf="@+id/value_salida_estimada"
+                    app:layout_constraintTop_toBottomOf="@+id/value_salida_estimada" />
+
+                <TextView
+                    android:id="@+id/label_peso"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Peso:"
+                    android:textSize="@dimen/tracking_card_label"
+                    android:textStyle="bold"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toStartOf="@+id/label_llegada"
+                    app:layout_constraintTop_toBottomOf="@+id/label_llegada"
+                    />
+
+                <TextView
+                    android:id="@+id/value_peso"
+                    android:layout_width="169dp"
+                    android:layout_height="wrap_content"
+                    android:text="10 KG"
+                    android:textSize="@dimen/tracking_card_label"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toStartOf="@+id/value_llegada"
+                    app:layout_constraintTop_toBottomOf="@+id/value_llegada" />
+
+                <TextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/trackingsingle_status_background"
+                    android:gravity="center"
+                    android:text="Estado: En proceso"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:textSize="@dimen/tracking_card_label"
+                    android:textStyle="bold"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintTop_toBottomOf="@+id/value_peso"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <fragment
+                    android:id="@+id/map"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:context=".ui.trackingsingle.TrackingSingleActivity" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+</LinearLayout>
