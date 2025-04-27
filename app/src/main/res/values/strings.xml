@@ -27,6 +27,6 @@
     <string name="tracking_text_search_message">Buscar por código de seguimiento</string>
     <string name="tracking_edit_tracking_code">Código de seguimiento</string>
     <string name="button_search">Buscar</string>
-    <string name="tracking_text_recent_search">Ordenes Registradas</string>
+    <string name="tracking_text_recent_search">Busquedas recientes</string>
     <string name="title_activity_maps">MapsActivity</string>
 </resources>

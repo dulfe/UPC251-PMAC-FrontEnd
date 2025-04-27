@@ -10,16 +10,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.betondecken.trackingsystem.HomeActivity
 import com.betondecken.trackingsystem.MyApplication
-import com.betondecken.trackingsystem.R
 import com.betondecken.trackingsystem.databinding.ActivityLoginBinding
-import com.betondecken.trackingsystem.databinding.FragmentTrackingBinding
-import com.betondecken.trackingsystem.repositories.UserLoginResult
 import com.betondecken.trackingsystem.repositories.UserRepository
 import com.betondecken.trackingsystem.ui.register.RegisterActivity
+import kotlinx.coroutines.launch
 
 class LoginViewModelFactory(private val userRepository: UserRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -32,16 +33,12 @@ class LoginViewModelFactory(private val userRepository: UserRepository) : ViewMo
 }
 
 class LoginActivity : AppCompatActivity() {
-    private var _binding: ActivityLoginBinding? = null
-    private val binding get() = _binding!!
-
-    private val loginViewModel: LoginViewModel by viewModels {
+    private val viewModel: LoginViewModel by viewModels {
         val userRepository = (application as MyApplication).userRepository
         LoginViewModelFactory(userRepository)
     }
-
-    //private lateinit var loadingIndicator: CircularProgressIndicator
-
+    private var _binding: ActivityLoginBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,60 +48,28 @@ class LoginActivity : AppCompatActivity() {
         _binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-//        // Obtener referencia al indicador de progreso (si existe en tu layout activity_login.xml)
-//        loadingIndicator = binding.root.findViewById(R.id.loading_indicator)
-
-
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        loginViewModel.isLoading.observe(this) { isLoading ->
-            //loadingIndicator.visibility = if (isLoading) View.VISIBLE else View.GONE
-            binding.btnLogin.isEnabled = !isLoading
-            binding.btnRegister.isEnabled = !isLoading
-            binding.btnForgotPassword.isEnabled = !isLoading
-            binding.txtEmail.isEnabled = !isLoading
-            binding.txtPassword.isEnabled = !isLoading
-        }
+        setupListeners()
+        observeState()
+        observeEvents()
+    }
 
-        loginViewModel.loginResult.observe(this) { event ->
-            event.getContentIfNotHandled()?.let { result ->
-                when (result) {
-                    is UserLoginResult.Success -> {
-                        Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this, HomeActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    }
-                    is UserLoginResult.Error -> {
-                        Toast.makeText(this, "Login Failed: ${result.message}", Toast.LENGTH_LONG).show()
-                    }
-                }
-            }
-        }
-
-        loginViewModel.errorMessage.observe(this) { event ->
-            event.getContentIfNotHandled()?.let { message ->
-                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        // --- Conectar acciones de la UI a métodos del ViewModel (sin cambios aquí) ---
-
-
+    private fun setupListeners() {
+        // Campos
         binding.txtEmail.addTextChangedListener { text ->
-            loginViewModel.onEmailInputChanged(text.toString())
+            viewModel.onEmailInputChanged(text.toString())
         }
 
         binding.txtPassword.addTextChangedListener { text ->
-            loginViewModel.onPasswordInputChanged(text.toString())
+            viewModel.onPasswordInputChanged(text.toString())
         }
 
-        // Enlazar los eventos
+        // Botones
         binding.btnRegister.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
@@ -114,12 +79,42 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.btnLogin.setOnClickListener {
-            //startActivity(Intent(this, HomeActivity::class.java))
-            loginViewModel.onLoginClick()
+            viewModel.onLoginClick()
         }
+    }
 
+    private fun observeState() {
+        // Pattern estandar para observar el estado de la UI cuando se usa corutinas
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { state ->
+                    binding.btnLogin.isEnabled = !state.isLoading
+                    binding.txtEmail.isEnabled = !state.isLoading
+                    binding.txtPassword.isEnabled = !state.isLoading
+                    binding.progressBar.visibility = if (state.isLoading) View.VISIBLE else View.GONE
+                }
+            }
+        }
+    }
 
-
+    private fun observeEvents() {
+        // Pattern estandar para observar el estado de los eventos cuando se usa corutinas
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.events.collect { event ->
+                    when (event) {
+                        is LoginEvent.Error -> {
+                            Toast.makeText(this@LoginActivity, event.message, Toast.LENGTH_SHORT).show()
+                        }
+                        is LoginEvent.Success -> {
+                            val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }
+                    }
+                }
+            }
+        }
     }
 
     override fun onDestroy() {

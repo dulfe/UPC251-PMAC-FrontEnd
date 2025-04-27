@@ -4,12 +4,17 @@ import com.betondecken.trackingsystem.entities.AccessToken
 import com.betondecken.trackingsystem.entities.DataSourceResult
 import com.betondecken.trackingsystem.entities.SimpleError
 import com.betondecken.trackingsystem.entities.Usuario
+import kotlinx.coroutines.delay
 import java.time.OffsetDateTime
 
 
 class UserDataSource(
 ) {
     suspend fun login(username: String, password: String): DataSourceResult<AccessToken> {
+        // Simular una llamada a la API con un retraso
+        delay(2000)
+
+        // Retornar un ejemplo
         val token = AccessToken(
             access_token = "mock_access",
             scope = "mock_scope",
@@ -21,6 +26,10 @@ class UserDataSource(
     }
 
     suspend fun refresh(refreshToken: String): DataSourceResult<AccessToken>  {
+        // Simular una llamada a la API con un retraso
+        delay(2000)
+
+        // Retornar un ejemplo
         val token = AccessToken(
             access_token = "mock_access",
             scope = "mock_scope",
@@ -32,6 +41,10 @@ class UserDataSource(
     }
 
     suspend fun whoAmI(): DataSourceResult<Usuario>  {
+        // Simular una llamada a la API con un retraso
+        delay(2000)
+
+        // Retornar un ejemplo
         val result = Usuario(
             email = "test@server.com",
             estado = "A",

@@ -88,6 +88,13 @@
             android:layout_marginTop="16dp"
             android:text="@string/home_button_init_session" />
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:visibility="gone"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
