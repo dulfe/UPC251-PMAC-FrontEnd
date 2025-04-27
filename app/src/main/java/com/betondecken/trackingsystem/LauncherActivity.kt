@@ -26,7 +26,10 @@ class LauncherActivity : AppCompatActivity() {
 
         // start LoginActivity
         startActivity(Intent(this, LoginActivity::class.java))
-        //startActivity(Intent(this, HomeActivity::class.java))
+
+        // Nota: Esta clase tal vez tiene la intension que el usuario actual se almacene en algun
+        // lugar que sobreviva a que se cierre la aplicacion, pero eso tomara tiempo y tal vez
+        // no valga la pena. Por ahora solo se inicia la actividad de login y se cierra esta.
 
         // finish LauncherActivity
         finish()

@@ -1,4 +1,4 @@
-package com.betondecken.trackingsystem.datasources.entities
+package com.betondecken.trackingsystem.entities
 
 data class AccessToken(
     val access_token: String,
