@@ -6,9 +6,10 @@ import com.betondecken.trackingsystem.entities.SimpleError
 import com.betondecken.trackingsystem.entities.Usuario
 import kotlinx.coroutines.delay
 import java.time.OffsetDateTime
+import javax.inject.Inject
 
 
-class UserDataSource(
+class UserDataSource @Inject constructor (
 ) {
     suspend fun login(username: String, password: String): DataSourceResult<AccessToken> {
         // Simular una llamada a la API con un retraso

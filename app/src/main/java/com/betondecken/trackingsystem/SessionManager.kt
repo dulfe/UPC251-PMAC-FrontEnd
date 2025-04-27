@@ -1,8 +1,9 @@
 package com.betondecken.trackingsystem
 
 import com.betondecken.trackingsystem.entities.AccessToken
+import javax.inject.Inject
 
-class SessionManager {
+class SessionManager @Inject constructor() {
     private var _accessToken: AccessToken? = null
 
     fun saveAccessToken(token: AccessToken) {

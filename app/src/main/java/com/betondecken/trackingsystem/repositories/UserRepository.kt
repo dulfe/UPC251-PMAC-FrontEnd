@@ -8,6 +8,7 @@ import com.betondecken.trackingsystem.entities.SimpleError
 import com.betondecken.trackingsystem.entities.Usuario
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import javax.inject.Inject
 
 sealed class UserLoginResult {
     data class Success(val user: Usuario) : UserLoginResult()
@@ -16,7 +17,7 @@ sealed class UserLoginResult {
     //data object InvalidCredentials : UserLoginResult()
 }
 
-class UserRepository(
+class UserRepository @Inject constructor(
     private val userDataSource: UserDataSource,
     private val sessionManager: SessionManager
 ) {
