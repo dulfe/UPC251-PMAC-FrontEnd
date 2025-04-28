@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.betondecken.trackingsystem.R
+import com.betondecken.trackingsystem.entities.RepositoryResult
 import com.betondecken.trackingsystem.entities.ResumenDeOrdenResponse
-import com.betondecken.trackingsystem.repositories.GetOrdersResult
 import com.betondecken.trackingsystem.repositories.TrackingRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -69,13 +69,12 @@ class TrackingViewModel @Inject constructor  (
     fun loadRecentSearches() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoadingRecentSearches = true) }
-            val recentSearches = trackingRepository.getRecentOrders(10)
-            when (recentSearches) {
-                is GetOrdersResult.Error -> {
-                    _events.emit(TrackingEvent.Error(recentSearches.message))
+            when (val recentSearches = trackingRepository.getRecentOrders(10)) {
+                is RepositoryResult.Error -> {
+                    _events.emit(TrackingEvent.Error(recentSearches.error))
                 }
-                is GetOrdersResult.Success -> {
-                    _uiState.update { it.copy(recentSearchedOrders = recentSearches.orders) }
+                is RepositoryResult.Success -> {
+                    _uiState.update { it.copy(recentSearchedOrders = recentSearches.data) }
                 }
             }
             _uiState.update { it.copy(isLoadingRecentSearches = false) }

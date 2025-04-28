@@ -32,14 +32,44 @@
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/cardMessage"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:id="@+id/progressBar"
+                    />
+
+                <TextView
+                    android:id="@+id/tvMessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/tracking_card_label"
+                    android:textStyle="bold"
+                    />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cardDetails"
+            >
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/value_salida_estimada"
-                app:layout_constraintTop_toBottomOf="@+id/value_salida_estimada">
+                app:layout_constraintBottom_toBottomOf="@+id/txtEstimatedShipmentDate"
+                app:layout_constraintTop_toBottomOf="@+id/txtEstimatedShipmentDate">
 
                 <TextView
                     android:id="@+id/label_conductor"
@@ -53,7 +83,7 @@
                      />
 
                 <TextView
-                    android:id="@+id/value_conductor"
+                    android:id="@+id/txtDriver"
                     android:layout_width="182dp"
                     android:layout_height="wrap_content"
                     android:text="Ricardo Castillo"
@@ -76,14 +106,14 @@
  />
 
                 <TextView
-                    android:id="@+id/value_telefono"
+                    android:id="@+id/txtDriverPhone"
                     android:layout_width="169dp"
                     android:layout_height="wrap_content"
                     android:text="999-999-999"
                     android:textSize="@dimen/tracking_card_label"
                     android:layout_marginTop="10dp"
-                    app:layout_constraintStart_toStartOf="@+id/value_conductor"
-                    app:layout_constraintTop_toBottomOf="@+id/value_conductor" />
+                    app:layout_constraintStart_toStartOf="@+id/txtDriver"
+                    app:layout_constraintTop_toBottomOf="@+id/txtDriver" />
 
                 <TextView
                     android:id="@+id/label_salida"
@@ -98,14 +128,14 @@
                     />
 
                 <TextView
-                    android:id="@+id/value_salida"
+                    android:id="@+id/txtFactory"
                     android:layout_width="169dp"
                     android:layout_height="wrap_content"
                     android:text="Nombre Fábrica"
                     android:textSize="@dimen/tracking_card_label"
                     android:layout_marginTop="10dp"
-                    app:layout_constraintStart_toStartOf="@+id/value_telefono"
-                    app:layout_constraintTop_toBottomOf="@+id/value_telefono" />
+                    app:layout_constraintStart_toStartOf="@+id/txtDriverPhone"
+                    app:layout_constraintTop_toBottomOf="@+id/txtDriverPhone" />
 
                 <TextView
                     android:id="@+id/label_salida_estimada"
@@ -119,14 +149,14 @@
                     app:layout_constraintTop_toBottomOf="@+id/label_salida" />
 
                 <TextView
-                    android:id="@+id/value_salida_estimada"
+                    android:id="@+id/txtEstimatedShipmentDate"
                     android:layout_width="169dp"
                     android:layout_height="wrap_content"
                     android:text="Nombre Fábrica"
                     android:textSize="@dimen/tracking_card_label"
                     android:layout_marginTop="10dp"
-                    app:layout_constraintStart_toStartOf="@+id/value_salida"
-                    app:layout_constraintTop_toBottomOf="@+id/value_salida" />
+                    app:layout_constraintStart_toStartOf="@+id/txtFactory"
+                    app:layout_constraintTop_toBottomOf="@+id/txtFactory" />
 
                 <TextView
                     android:id="@+id/label_llegada"
@@ -140,14 +170,14 @@
                     app:layout_constraintTop_toBottomOf="@+id/label_salida_estimada" />
 
                 <TextView
-                    android:id="@+id/value_llegada"
+                    android:id="@+id/txtDeliveryLocationName"
                     android:layout_width="169dp"
                     android:layout_height="wrap_content"
                     android:text="Nombre Fábrica"
                     android:textSize="@dimen/tracking_card_label"
                     android:layout_marginTop="10dp"
-                    app:layout_constraintStart_toStartOf="@+id/value_salida_estimada"
-                    app:layout_constraintTop_toBottomOf="@+id/value_salida_estimada" />
+                    app:layout_constraintStart_toStartOf="@+id/txtEstimatedShipmentDate"
+                    app:layout_constraintTop_toBottomOf="@+id/txtEstimatedShipmentDate" />
 
                 <TextView
                     android:id="@+id/label_peso"
@@ -162,14 +192,14 @@
                     />
 
                 <TextView
-                    android:id="@+id/value_peso"
+                    android:id="@+id/txtWeight"
                     android:layout_width="169dp"
                     android:layout_height="wrap_content"
                     android:text="10 KG"
                     android:textSize="@dimen/tracking_card_label"
                     android:layout_marginTop="10dp"
-                    app:layout_constraintStart_toStartOf="@+id/value_llegada"
-                    app:layout_constraintTop_toBottomOf="@+id/value_llegada" />
+                    app:layout_constraintStart_toStartOf="@+id/txtDeliveryLocationName"
+                    app:layout_constraintTop_toBottomOf="@+id/txtDeliveryLocationName" />
 
                 <TextView
                     android:id="@+id/tvStatus"
@@ -182,7 +212,7 @@
                     android:textSize="@dimen/tracking_card_label"
                     android:textStyle="bold"
                     android:layout_marginTop="10dp"
-                    app:layout_constraintTop_toBottomOf="@+id/value_peso"
+                    app:layout_constraintTop_toBottomOf="@+id/txtWeight"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     />
@@ -195,6 +225,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="20dp"
+            android:id="@+id/cardMap"
             >
 
             <LinearLayout
