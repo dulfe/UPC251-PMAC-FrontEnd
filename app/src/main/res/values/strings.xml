@@ -29,4 +29,7 @@
     <string name="button_search">Buscar</string>
     <string name="tracking_text_recent_search">Busquedas recientes</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="login_validation_enter_email_and_password">Por favor ingrese ambos, el Email y Password.</string>
+    <string name="unknown_error">Error Desconocido</string>
+    <string name="tracking_validation_enter_trackingcode">Codigo de Seguimiento no puede estar vacio.</string>
 </resources>

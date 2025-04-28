@@ -1,8 +1,10 @@
 package com.betondecken.trackingsystem.ui.login
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.betondecken.trackingsystem.entities.Usuario
+import com.betondecken.trackingsystem.R
+import com.betondecken.trackingsystem.entities.UsuarioResponse
 import com.betondecken.trackingsystem.repositories.UserLoginResult
 import com.betondecken.trackingsystem.repositories.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,14 +27,16 @@ data class LoginUiState(
 
 sealed class LoginEvent {
     data class Error(val message: String) : LoginEvent()
-    data class Success(val result: Usuario) : LoginEvent()
+    data class Success(val result: UsuarioResponse) : LoginEvent()
 }
 
 // ViewModel para la pantalla de Login
 @HiltViewModel
 class LoginViewModel @Inject constructor (
+    private val application: Application,
     private val userRepository: UserRepository
-) : ViewModel() {
+//) : ViewModel() {
+): AndroidViewModel(application) {
 
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState: StateFlow<LoginUiState> = _uiState
@@ -55,7 +59,7 @@ class LoginViewModel @Inject constructor (
         // Validación básica (ej. que no estén vacíos)
         if (currentEmail.isEmpty() || currentPassword.isEmpty()) {
             viewModelScope.launch {
-                _events.emit(LoginEvent.Error("Please enter both email and password"))
+                _events.emit(LoginEvent.Error(application.getString(R.string.login_validation_enter_email_and_password)))
             }
             return // Salir de la función si la validación falla
         }
@@ -80,7 +84,7 @@ class LoginViewModel @Inject constructor (
                     }
                 }
             } catch (e: Exception) {
-                _events.emit(LoginEvent.Error(e.message ?: "Unknown error"))
+                _events.emit(LoginEvent.Error(e.message ?: application.getString(R.string.unknown_error)))
             } finally {
                 // Ocultar el indicador de carga
                 _uiState.update { it.copy(isLoading = false) }

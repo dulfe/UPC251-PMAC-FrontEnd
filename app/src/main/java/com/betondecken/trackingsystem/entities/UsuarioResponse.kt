@@ -2,7 +2,7 @@ package com.betondecken.trackingsystem.entities
 
 import java.time.OffsetDateTime
 
-data class Usuario(
+data class UsuarioResponse(
     val usuarioId: Int,
     val email: String,
     val passwordHash: String,

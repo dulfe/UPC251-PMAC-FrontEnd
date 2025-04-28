@@ -13,7 +13,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.betondecken.trackingsystem.databinding.FragmentSupportBinding
 import androidx.core.net.toUri
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SupportFragment : Fragment() {
 
     private var _binding: FragmentSupportBinding? = null

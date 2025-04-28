@@ -2,8 +2,7 @@ package com.betondecken.trackingsystem.datasources
 
 import com.betondecken.trackingsystem.entities.AccessToken
 import com.betondecken.trackingsystem.entities.DataSourceResult
-import com.betondecken.trackingsystem.entities.SimpleError
-import com.betondecken.trackingsystem.entities.Usuario
+import com.betondecken.trackingsystem.entities.UsuarioResponse
 import kotlinx.coroutines.delay
 import java.time.OffsetDateTime
 import javax.inject.Inject
@@ -41,12 +40,12 @@ class UserDataSource @Inject constructor (
         return DataSourceResult.Success(token)
     }
 
-    suspend fun whoAmI(): DataSourceResult<Usuario>  {
+    suspend fun whoAmI(): DataSourceResult<UsuarioResponse>  {
         // Simular una llamada a la API con un retraso
         delay(2000)
 
         // Retornar un ejemplo
-        val result = Usuario(
+        val result = UsuarioResponse(
             email = "test@server.com",
             estado = "A",
             nombres = "Test",

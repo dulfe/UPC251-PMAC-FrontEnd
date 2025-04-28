@@ -2,16 +2,14 @@ package com.betondecken.trackingsystem.repositories
 
 import com.betondecken.trackingsystem.SessionManager
 import com.betondecken.trackingsystem.datasources.UserDataSource
-import com.betondecken.trackingsystem.entities.AccessToken
 import com.betondecken.trackingsystem.entities.DataSourceResult
-import com.betondecken.trackingsystem.entities.SimpleError
-import com.betondecken.trackingsystem.entities.Usuario
+import com.betondecken.trackingsystem.entities.UsuarioResponse
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 sealed class UserLoginResult {
-    data class Success(val user: Usuario) : UserLoginResult()
+    data class Success(val user: UsuarioResponse) : UserLoginResult()
     data class Error(val message: String) : UserLoginResult()
     //data object NotFound : UserLoginResult()
     //data object InvalidCredentials : UserLoginResult()
@@ -23,8 +21,8 @@ class UserRepository @Inject constructor(
 ) {
 
     // TODO: No creo que necesito esto
-    private val _user = MutableStateFlow<Usuario?>(null)
-    val user: StateFlow<Usuario?> = _user
+    private val _user = MutableStateFlow<UsuarioResponse?>(null)
+    val user: StateFlow<UsuarioResponse?> = _user
 
     suspend fun login(username: String, password: String): UserLoginResult {
         sessionManager.clearSession()

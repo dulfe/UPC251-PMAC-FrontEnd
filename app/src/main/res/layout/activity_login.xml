@@ -73,8 +73,7 @@
                         android:id="@+id/txtPassword"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="textPassword|textNoSuggestions"
-                        />
+                        android:inputType="textPassword|textNoSuggestions" />
 
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
@@ -88,12 +87,14 @@
             android:layout_marginTop="16dp"
             android:text="@string/home_button_init_session" />
 
-        <ProgressBar
+        <com.google.android.material.progressindicator.CircularProgressIndicator
             android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:visibility="gone"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            app:indicatorColor="@color/design_default_color_secondary"
+            android:indeterminate="true" />
 
         <ImageView
             android:layout_width="match_parent"

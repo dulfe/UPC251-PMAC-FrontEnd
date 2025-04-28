@@ -9,16 +9,17 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.betondecken.trackingsystem.R
+import com.betondecken.trackingsystem.entities.ResumenDeOrdenResponse
 
 class TrackingAdapter(
     context: Context,
-    trackingItems: MutableList<TrackingItem>,
+    trackingItems: MutableList<ResumenDeOrdenResponse>,
     private val onDeleteClickListener: (position: Int) -> Unit,
     private val onItemClickListener: (position: Int) -> Unit
-) : ArrayAdapter<TrackingItem>(context, 0, trackingItems) {
+) : ArrayAdapter<ResumenDeOrdenResponse>(context, 0, trackingItems) {
 
     private val mContext: Context = context
-    private val mTrackingItems: MutableList<TrackingItem> = trackingItems
+    private val mTrackingItems: MutableList<ResumenDeOrdenResponse> = trackingItems
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var listItem = convertView
