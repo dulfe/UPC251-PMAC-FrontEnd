@@ -57,14 +57,6 @@ class TrackingFragment : Fragment() {
         observeState()
         observeEvents()
 
-//        val loginButton = binding.btnSearch
-//        loginButton.setOnClickListener {
-//            // pass the tracking code
-//            val trackingCode = binding.txtTrackingCode.text.toString()
-//            val intent = Intent(context, TrackingSingleActivity::class.java)
-//            intent.putExtra("codigoDeSeguimiento", trackingCode)
-//            startActivity(intent)
-//        }
         return root
     }
 
@@ -89,6 +81,14 @@ class TrackingFragment : Fragment() {
                     trackingItems.clear()
                     trackingItems.addAll(state.recentSearchedOrders)
                     adapter.notifyDataSetChanged()
+
+                    if (state.isLoadingRecentSearches) {
+                        binding.progressBar.visibility = View.VISIBLE
+                        binding.lstTrackingList.visibility = View.GONE
+                    } else {
+                        binding.progressBar.visibility = View.GONE
+                        binding.lstTrackingList.visibility = View.VISIBLE
+                    }
                 }
             }
         }
@@ -105,7 +105,7 @@ class TrackingFragment : Fragment() {
                         }
 
                         is TrackingEvent.IsValid -> {
-                            val intent = Intent(context, HomeActivity::class.java)
+                            val intent = Intent(context, TrackingSingleActivity::class.java)
                             intent.putExtra(
                                 "codigoDeSeguimiento",
                                 viewModel.uiState.value.trackingCode
