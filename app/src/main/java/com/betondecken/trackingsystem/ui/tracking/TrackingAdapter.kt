@@ -9,41 +9,46 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.betondecken.trackingsystem.R
+import com.betondecken.trackingsystem.entities.ResumenDeOrdenResponse
 
 class TrackingAdapter(
     context: Context,
-    trackingItems: MutableList<TrackingItem>,
+    trackingItems: MutableList<ResumenDeOrdenResponse>,
     private val onDeleteClickListener: (position: Int) -> Unit,
     private val onItemClickListener: (position: Int) -> Unit
-) : ArrayAdapter<TrackingItem>(context, 0, trackingItems) {
+) : ArrayAdapter<ResumenDeOrdenResponse>(context, 0, trackingItems) {
 
-    private val mContext: Context = context
-    private val mTrackingItems: MutableList<TrackingItem> = trackingItems
+    private val _context: Context = context
+    private val _items: MutableList<ResumenDeOrdenResponse> = trackingItems
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        // Cargar el layout de los elementos de la lista
         var listItem = convertView
         if (listItem == null) {
             listItem =
-                LayoutInflater.from(mContext).inflate(R.layout.list_item_tracking, parent, false)
+                LayoutInflater.from(_context).inflate(R.layout.list_item_tracking, parent, false)
         }
 
-        val currentItem = mTrackingItems[position]
+        // Obtener el elemento actual de la lista
+        val currentItem = _items[position]
 
+        // Asignar los valores a los TextViews
         val codigoTextView = listItem?.findViewById<TextView>(R.id.text_codigo_seguimiento)
         codigoTextView?.text = currentItem.codigoDeSeguimiento
 
         val estadoTextView = listItem?.findViewById<TextView>(R.id.text_estado)
         estadoTextView?.text = currentItem.estado
 
-        // Set color based on status
+        // Assignar el color del estado
         val color = when (currentItem.estado) {
             "ENTREGADO" -> android.R.color.holo_blue_dark
             "EN_PROCESO" -> android.R.color.holo_green_dark
-            "EN_FABRICACION" -> android.R.color.holo_orange_dark // Using orange for yellow-ish
+            "EN_FABRICACION" -> android.R.color.holo_orange_dark
             else -> android.R.color.holo_red_dark
         }
-        estadoTextView?.setTextColor(ContextCompat.getColor(mContext, color))
+        estadoTextView?.setTextColor(ContextCompat.getColor(_context, color))
 
+        // Enlazar eventos
         val deleteButton = listItem?.findViewById<ImageView>(R.id.button_delete)
         deleteButton?.setOnClickListener {
             onDeleteClickListener.invoke(position)

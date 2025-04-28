@@ -24,9 +24,12 @@
     <string name="tracking_listitem_delete_question">¿Estás seguro de que deseas eliminar este elemento?</string>
     <string name="tracking_listitem_delete_title">Confirmar eliminación</string>
     <string name="button_delete">Eliminar</string>
-    <string name="tracking_text_search_message">Buscar por código de seguimiento</string>
+    <string name="tracking_text_search_message">Buscar por código</string>
     <string name="tracking_edit_tracking_code">Código de seguimiento</string>
     <string name="button_search">Buscar</string>
-    <string name="tracking_text_recent_search">Ordenes Registradas</string>
+    <string name="tracking_text_recent_search">Busquedas recientes</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="login_validation_enter_email_and_password">Por favor ingrese ambos, el Email y Password.</string>
+    <string name="unknown_error">Error Desconocido</string>
+    <string name="tracking_validation_enter_trackingcode">Codigo de Seguimiento no puede estar vacio.</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.betondecken.trackingsystem.datasources.entities
+package com.betondecken.trackingsystem.entities
 
 data class SimpleError(val codigo: String, val mensaje: String) {
     override fun toString(): String {
