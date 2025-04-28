@@ -36,16 +36,28 @@ class TrackingAdapter(
         val codigoTextView = listItem?.findViewById<TextView>(R.id.text_codigo_seguimiento)
         codigoTextView?.text = currentItem.codigoDeSeguimiento
 
-        val estadoTextView = listItem?.findViewById<TextView>(R.id.text_estado)
-        estadoTextView?.text = currentItem.estado
-
-        // Assignar el color del estado
-        val color = when (currentItem.estado) {
-            "ENTREGADO" -> android.R.color.holo_blue_dark
-            "EN_PROCESO" -> android.R.color.holo_green_dark
-            "EN_FABRICACION" -> android.R.color.holo_orange_dark
-            else -> android.R.color.holo_red_dark
+        var color: Int = android.R.color.holo_red_dark
+        var colorName: String = "DESCONOCIDO";
+        when (currentItem.estado) {
+            // En Fabricacion
+            "P" -> {
+                colorName = "EN FABRICACION"
+                color = android.R.color.holo_orange_dark
+            }
+            // Enviado
+            "E" -> {
+                colorName = "ENVIADO"
+                color = android.R.color.holo_green_dark
+            }
+            // Entregado
+            "C" -> {
+                colorName = "ENTREGADO"
+                color = android.R.color.holo_blue_dark
+            }
         }
+
+        val estadoTextView = listItem?.findViewById<TextView>(R.id.text_estado)
+        estadoTextView?.text = colorName
         estadoTextView?.setTextColor(ContextCompat.getColor(_context, color))
 
         // Enlazar eventos

@@ -16,7 +16,7 @@ class TrackingDataSource @Inject constructor() {
         // Retornar un ejemplo
         val trackingData = listOf(
             ResumenDeOrdenResponse(
-                estado = "ENTREGADO",
+                estado = "C",
                 fechaDeCreacion = OffsetDateTime.now(),
                 ordenDeTrabajoId = 1,
                 fechaDeEnvio = OffsetDateTime.now(),
@@ -26,7 +26,7 @@ class TrackingDataSource @Inject constructor() {
                 fechaEstimadaDeEntrega = OffsetDateTime.now()
             ),
             ResumenDeOrdenResponse(
-                estado = "EN_PROCESO",
+                estado = "P",
                 fechaDeCreacion = OffsetDateTime.now(),
                 ordenDeTrabajoId = 2,
                 fechaDeEnvio = OffsetDateTime.now(),
@@ -36,7 +36,7 @@ class TrackingDataSource @Inject constructor() {
                 fechaEstimadaDeEntrega = OffsetDateTime.now()
             ),
             ResumenDeOrdenResponse(
-                estado = "EN_FABRICACION",
+                estado = "P",
                 fechaDeCreacion = OffsetDateTime.now(),
                 ordenDeTrabajoId = 2,
                 fechaDeEnvio = OffsetDateTime.now(),
@@ -46,7 +46,7 @@ class TrackingDataSource @Inject constructor() {
                 fechaEstimadaDeEntrega = OffsetDateTime.now()
             ),
             ResumenDeOrdenResponse(
-                estado = "CANCELADO",
+                estado = "X",
                 fechaDeCreacion = OffsetDateTime.now(),
                 ordenDeTrabajoId = 2,
                 fechaDeEnvio = OffsetDateTime.now(),
@@ -56,7 +56,7 @@ class TrackingDataSource @Inject constructor() {
                 fechaEstimadaDeEntrega = OffsetDateTime.now()
             ),
             ResumenDeOrdenResponse(
-                estado = "ENTREGADO",
+                estado = "C",
                 fechaDeCreacion = OffsetDateTime.now(),
                 ordenDeTrabajoId = 2,
                 fechaDeEnvio = OffsetDateTime.now(),
@@ -66,7 +66,7 @@ class TrackingDataSource @Inject constructor() {
                 fechaEstimadaDeEntrega = OffsetDateTime.now()
             ),
             ResumenDeOrdenResponse(
-                estado = "ENTREGADO",
+                estado = "C",
                 fechaDeCreacion = OffsetDateTime.now(),
                 ordenDeTrabajoId = 2,
                 fechaDeEnvio = OffsetDateTime.now(),
