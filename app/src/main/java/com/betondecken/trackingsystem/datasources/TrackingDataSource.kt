@@ -64,6 +64,16 @@ class TrackingDataSource @Inject constructor() {
                 fechaEstimadaDeEnvio = OffsetDateTime.now(),
                 fechaDeEntrega = OffsetDateTime.now(),
                 fechaEstimadaDeEntrega = OffsetDateTime.now()
+            ),
+            ResumenDeOrdenResponse(
+                estado = "ENTREGADO",
+                fechaDeCreacion = OffsetDateTime.now(),
+                ordenDeTrabajoId = 2,
+                fechaDeEnvio = OffsetDateTime.now(),
+                codigoDeSeguimiento = "TRK900877667",
+                fechaEstimadaDeEnvio = OffsetDateTime.now(),
+                fechaDeEntrega = OffsetDateTime.now(),
+                fechaEstimadaDeEntrega = OffsetDateTime.now()
             )
         )
 

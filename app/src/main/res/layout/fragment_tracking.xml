@@ -51,14 +51,42 @@
                     android:layout_marginTop="16dp"
                     android:text="@string/button_search" />
 
+
+
+            </LinearLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                >
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
                     android:layout_marginBottom="10dp"
                     android:text="@string/tracking_text_recent_search"
                     android:textAlignment="center"
-                    android:textAppearance="?attr/textAppearanceHeadlineMedium" />
+                    android:textAppearance="?attr/textAppearanceHeadlineSmall" />
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    android:indeterminate="true" />
 
                 <ListView
                     android:id="@+id/lstTrackingList"
@@ -66,8 +94,6 @@
                     android:layout_height="match_parent" />
 
             </LinearLayout>
-
-
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 
