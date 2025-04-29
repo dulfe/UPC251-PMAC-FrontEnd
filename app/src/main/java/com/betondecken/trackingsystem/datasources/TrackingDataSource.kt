@@ -85,7 +85,7 @@ class TrackingDataSource @Inject constructor() {
 
         // Retornar un ejemplo
         val trackingData = DetalleDeOrdenResponse(
-            estado = "A",
+            estado = "P",
             fechaDeCreacion = OffsetDateTime.now(),
             ordenDeTrabajoId = 1,
             fechaDeEnvio = OffsetDateTime.now(),
@@ -95,16 +95,19 @@ class TrackingDataSource @Inject constructor() {
             fechaEstimadaDeEntrega = OffsetDateTime.now(),
             clienteId = 1,
             fabricaId = 1,
-            conductorNombres = "Nombre",
+            conductorNombres = "Juan",
             conductorId = 1,
             pesoEnKilos = 1.3,
             conductorTelefono = "123456789",
             nombreDeLaFabrica = "Fabrica 1",
-            conductorApellidos = "Apellidos",
-            direccionDeEntrega = "Direccion de entrega",
-            lugarDeEntrega = "Lugar de Entrega",
+            conductorApellidos = "Perez",
+            direccionDeEntrega = "Av. Argentina 4793, Callao 07041, Peru",
+            lugarDeEntrega = "Alicorp S.A.A.",
             envioId = 1,
-            fechaEstimadaDeTermino = OffsetDateTime.now()
+            fechaEstimadaDeTermino = OffsetDateTime.now(),
+
+            direccionDeEntregaLatitud = -12.048460385792891,
+            direccionDeEntregaLongitud = -77.09662151852136,
         )
 
         return DataSourceResult.Success(trackingData)

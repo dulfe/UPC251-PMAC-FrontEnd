@@ -48,8 +48,6 @@ class TrackingFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        //val homeViewModel = ViewModelProvider(this).get(TrackingViewModel::class.java)
-
         _binding = FragmentTrackingBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
