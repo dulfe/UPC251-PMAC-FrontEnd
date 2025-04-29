@@ -44,9 +44,14 @@ class LoginActivity : AppCompatActivity() {
             insets
         }
 
+        setupComponents()
         setupListeners()
         observeState()
         observeEvents()
+    }
+
+    private fun setupComponents() {
+        // No se necesita, ya que el diseño ya está configurado en el XML
     }
 
     private fun setupListeners() {
