@@ -104,7 +104,10 @@ class TrackingDataSource @Inject constructor() {
             direccionDeEntrega = "Av. Argentina 4793, Callao 07041, Peru",
             lugarDeEntrega = "Alicorp S.A.A.",
             envioId = 1,
-            fechaEstimadaDeTermino = OffsetDateTime.now()
+            fechaEstimadaDeTermino = OffsetDateTime.now(),
+
+            direccionDeEntregaLatitud = -12.048460385792891,
+            direccionDeEntregaLongitud = -77.09662151852136,
         )
 
         return DataSourceResult.Success(trackingData)

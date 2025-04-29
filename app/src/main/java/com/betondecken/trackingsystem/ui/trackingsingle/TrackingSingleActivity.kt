@@ -116,14 +116,16 @@ class TrackingSingleActivity : AppCompatActivity(), OnMapReadyCallback {
                         binding.cardDetails.visibility = View.VISIBLE
 
                         if (state.trackingDetails != null) {
+                            var data = state.trackingDetails
+                            
                             // Mostrar valores
                             binding.txtDriver.text =
-                                "${state.trackingDetails.conductorNombres} ${state.trackingDetails.conductorApellidos}"
-                            binding.txtDriverPhone.text = state.trackingDetails.conductorTelefono
-                            binding.txtFactory.text = state.trackingDetails.nombreDeLaFabrica
+                                "${data.conductorNombres} ${data.conductorApellidos}"
+                            binding.txtDriverPhone.text = data.conductorTelefono
+                            binding.txtFactory.text = data.nombreDeLaFabrica
                             binding.txtDeliveryLocationName.text =
-                                state.trackingDetails.lugarDeEntrega
-                            val formattedDate = state.trackingDetails.fechaEstimadaDeEnvio
+                                data.lugarDeEntrega
+                            val formattedDate = data.fechaEstimadaDeEnvio
                                 .format(
                                     DateTimeFormatter.ofPattern(
                                         "dd/MM/yyyy",
@@ -131,11 +133,11 @@ class TrackingSingleActivity : AppCompatActivity(), OnMapReadyCallback {
                                     )
                                 )
                             binding.txtEstimatedShipmentDate.text = formattedDate
-                            binding.txtWeight.text = "${state.trackingDetails.pesoEnKilos} kg"
+                            binding.txtWeight.text = "${data.pesoEnKilos} kg"
 
                             var color: Int = android.R.color.holo_red_dark
                             var statusName: String = "DESCONOCIDO";
-                            when (state.trackingDetails.estado) {
+                            when (data.estado) {
                                 // En Fabricacion
                                 "P" -> {
                                     statusName = "EN FABRICACION"
@@ -162,9 +164,16 @@ class TrackingSingleActivity : AppCompatActivity(), OnMapReadyCallback {
                             binding.tvStatus.text = statusName
 
                             if (::_map.isInitialized) {
-                                var address = state.trackingDetails.direccionDeEntrega
+                                // Crear la ubicación del marcador
+                                val pos = LatLng(
+                                    data.direccionDeEntregaLatitud, 
+                                    data.direccionDeEntregaLongitud)
+                                // Crear el marcador y mover la cámara
+                                _map.addMarker(MarkerOptions()
+                                    .position(pos)
+                                    .title(data.lugarDeEntrega))
+                                _map.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 15f))
 
-                                // TODO: Realizar GEOCODING usando una libraria (Google Maps SDK no tiene geocoding) y luego actualizar el mapa
                             }
                         }
                     }
@@ -178,21 +187,15 @@ class TrackingSingleActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     /**
-     * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
      */
     override fun onMapReady(googleMap: GoogleMap) {
         _map = googleMap
-
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        _map.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        _map.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+//
+//        // Add a marker in Sydney and move the camera
+//        val sydney = LatLng(-34.0, 151.0)
+//        _map.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+//        _map.moveCamera(CameraUpdateFactory.newLatLng(sydney))
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
