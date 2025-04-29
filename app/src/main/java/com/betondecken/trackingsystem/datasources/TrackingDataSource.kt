@@ -9,7 +9,6 @@ import kotlinx.coroutines.delay
 import java.time.OffsetDateTime
 
 class TrackingDataSource @Inject constructor() {
-    // Simular una llamada a la API con un retraso
     suspend fun getOrdenes(cantidad: Int): DataSourceResult<List<ResumenDeOrdenResponse>> {
         delay(2000)
 
