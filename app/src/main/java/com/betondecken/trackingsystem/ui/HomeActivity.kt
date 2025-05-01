@@ -1,4 +1,4 @@
-package com.betondecken.trackingsystem
+package com.betondecken.trackingsystem.ui
 
 import android.os.Bundle
 import android.view.Menu
@@ -10,8 +10,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.betondecken.trackingsystem.R
 import com.betondecken.trackingsystem.databinding.ActivityHomeBinding
-import com.google.android.material.appbar.MaterialToolbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -31,22 +31,21 @@ class HomeActivity : AppCompatActivity() {
             insets
         }
 
-        val toolbar = findViewById<MaterialToolbar>(R.id.my_toolbar)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.myToolbar)
 
         val navView: BottomNavigationView = binding.navView
-
-        //val navController = findNavController(R.id.nav_host_fragment_activity_home)
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_home) as NavHostFragment
+        val navHostFragment = supportFragmentManager.findFragmentById(binding.navHostFragmentActivityHome.id) as NavHostFragment //Use the id from the binding
         val navController = navHostFragment.navController
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
+        // Esto controlla el comportamiento del ActionBar al cambiar de fragmentos
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_tracking, R.id.navigation_history, R.id.navigation_support
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
+
+        // Esto configura el BottomNavigationView con el NavController y permite la navegación
         navView.setupWithNavController(navController)
     }
 

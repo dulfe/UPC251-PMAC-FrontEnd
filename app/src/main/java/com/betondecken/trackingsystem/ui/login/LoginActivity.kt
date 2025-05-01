@@ -11,17 +11,12 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.betondecken.trackingsystem.HomeActivity
-import com.betondecken.trackingsystem.MyApplication
+import com.betondecken.trackingsystem.ui.HomeActivity
 import com.betondecken.trackingsystem.databinding.ActivityLoginBinding
-import com.betondecken.trackingsystem.repositories.UserRepository
 import com.betondecken.trackingsystem.ui.register.RegisterActivity
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint

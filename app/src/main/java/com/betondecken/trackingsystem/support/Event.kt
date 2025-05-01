@@ -1,4 +1,4 @@
-package com.betondecken.trackingsystem
+package com.betondecken.trackingsystem.support
 
 // Utilidad para manejar eventos one-time (navegación, Toast, etc.)
 // Esto previene que el mismo evento se dispare múltiples veces en cambios de configuración

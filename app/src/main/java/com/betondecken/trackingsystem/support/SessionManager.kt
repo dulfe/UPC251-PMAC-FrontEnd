@@ -1,4 +1,4 @@
-package com.betondecken.trackingsystem
+package com.betondecken.trackingsystem.support
 
 import com.betondecken.trackingsystem.entities.AccessToken
 import javax.inject.Inject
