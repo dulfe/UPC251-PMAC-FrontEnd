@@ -2,34 +2,38 @@ package com.betondecken.trackingsystem.repositories
 
 import com.betondecken.trackingsystem.support.SessionManager
 import com.betondecken.trackingsystem.datasources.UserDataSource
+import com.betondecken.trackingsystem.entities.AccessToken
 import com.betondecken.trackingsystem.entities.DataSourceResult
 import com.betondecken.trackingsystem.entities.NuevoUsuarioInput
 import com.betondecken.trackingsystem.entities.UsuarioResponse
 import com.betondecken.trackingsystem.entities.RepositoryResult
 import javax.inject.Inject
 
-sealed class UserLoginResult {
-    data class Success(val user: UsuarioResponse) : UserLoginResult()
-    data class Error(val message: String) : UserLoginResult()
-}
-
 class UserRepository @Inject constructor(
-    private val userDataSource: UserDataSource,
-    private val sessionManager: SessionManager
+    private val userDataSource: UserDataSource
 ) {
-    suspend fun login(username: String, password: String): UserLoginResult {
-        sessionManager.clearSession()
+    suspend fun login(username: String, password: String): RepositoryResult<AccessToken> {
+        return when (val response = userDataSource.login(username, password)) {
+            is DataSourceResult.Success -> {
+                RepositoryResult.Success(response.data)
+            }
 
-        val accessToken = userDataSource.login(username, password)
-        if (accessToken is DataSourceResult.Success) {
-            sessionManager.saveAccessToken(accessToken.data)
-
-            val user = userDataSource.whoAmI()
-            if (user is DataSourceResult.Success) {
-                return UserLoginResult.Success(user.data)
+            is DataSourceResult.Error -> {
+                RepositoryResult.Error(response.error.mensaje)
             }
         }
-        return UserLoginResult.Error("Error al iniciar sesión")
+    }
+
+    suspend fun whoAmI(): RepositoryResult<UsuarioResponse> {
+        return when (val result = userDataSource.whoAmI()) {
+            is DataSourceResult.Success -> {
+                RepositoryResult.Success(result.data)
+            }
+
+            is DataSourceResult.Error -> {
+                RepositoryResult.Error(result.error.mensaje)
+            }
+        }
     }
 
     suspend fun register(user: NuevoUsuarioInput): RepositoryResult<UsuarioResponse> {
