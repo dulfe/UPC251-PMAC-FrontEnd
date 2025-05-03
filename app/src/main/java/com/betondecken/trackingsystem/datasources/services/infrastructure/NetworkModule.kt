@@ -1,5 +1,6 @@
 package com.betondecken.trackingsystem.datasources.services.infrastructure
 
+import com.betondecken.trackingsystem.datasources.services.TrackingApiService
 import com.betondecken.trackingsystem.datasources.services.UserApiService
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonDeserializer
@@ -75,9 +76,9 @@ object NetworkModule {
         return retrofit.create(UserApiService::class.java)
     }
 
-//    @Provides
-//    @Singleton
-//    fun provideTrackingApiService(retrofit: Retrofit): TrackingApiService {
-//        return retrofit.create(TrackingApiService::class.java)
-//    }
+    @Provides
+    @Singleton
+    fun provideTrackingApiService(retrofit: Retrofit): TrackingApiService {
+        return retrofit.create(TrackingApiService::class.java)
+    }
 }

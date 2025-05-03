@@ -35,4 +35,11 @@ class TrackingRepository @Inject constructor(
             }
         }
     }
+
+    suspend fun deleteOrdenPorUsuario(codigoDeSeguimiento: String): RepositoryResult<Unit> {
+        return when (val result = trackingDataSource.deleteOrdenPorUsuario(codigoDeSeguimiento)) {
+            is DataSourceResult.Success -> RepositoryResult.Success(result.data)
+            is DataSourceResult.Error -> RepositoryResult.Error(result.error.mensaje)
+        }
+    }
 }

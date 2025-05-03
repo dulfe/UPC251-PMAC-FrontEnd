@@ -20,12 +20,14 @@ import javax.inject.Inject
 data class TrackingUiState(
     val trackingCode: String = "",
     val isLoadingRecentSearches: Boolean = false,
+    val isRemovingTrackingCode: Boolean = false,
     val recentSearchedOrders: List<ResumenDeOrdenResponse> = emptyList(),
 )
 
 sealed class TrackingEvent {
     data object IsValid: TrackingEvent()
     data class Error(val message: String) : TrackingEvent()
+    data class TrackingCodeRemoved(val trackingCode: String) : TrackingEvent()
 }
 
 @HiltViewModel
@@ -78,6 +80,29 @@ class TrackingViewModel @Inject constructor  (
                 }
             }
             _uiState.update { it.copy(isLoadingRecentSearches = false) }
+        }
+    }
+
+    fun removeTrackingCode(trackingCode: String) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isRemovingTrackingCode = true) }
+
+            when (val result = trackingRepository.deleteOrdenPorUsuario(trackingCode)) {
+                is RepositoryResult.Error -> {
+                    _events.emit(TrackingEvent.Error(result.error))
+                }
+                is RepositoryResult.Success -> {
+                    // Removerlo de la lista
+                    val currentList = _uiState.value.recentSearchedOrders.toMutableList()
+                    currentList.removeAll { it.codigoDeSeguimiento == trackingCode }
+                    _uiState.update { it.copy(recentSearchedOrders = currentList) }
+
+                    // Avisar que se elimino
+                    _events.emit(TrackingEvent.TrackingCodeRemoved(trackingCode))
+                }
+            }
+
+            _uiState.update { it.copy(isRemovingTrackingCode = false) }
         }
     }
 }

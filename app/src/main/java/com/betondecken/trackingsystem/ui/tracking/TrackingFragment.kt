@@ -103,6 +103,18 @@ class TrackingFragment : Fragment() {
                             )
                             startActivity(intent)
                         }
+
+                        is TrackingEvent.TrackingCodeRemoved -> {
+                            val trackingCode = event.trackingCode
+
+                            // Mostrar mensaje
+                            Toast.makeText(
+                                requireContext(),
+                                //getString(R.string.tracking_listitem_delete_confirmation),
+                                "Eliminado: $trackingCode",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
                 }
             }
@@ -148,14 +160,18 @@ class TrackingFragment : Fragment() {
             .setTitle(getString(R.string.tracking_listitem_delete_title))
             .setMessage(getString(R.string.tracking_listitem_delete_question))
             .setPositiveButton(getString(R.string.button_delete)) { dialog: DialogInterface, which: Int ->
-                // Remove the item from the list
-                trackingItems.removeAt(position)
-                // Notify the adapter that the data has changed
-                adapter.notifyDataSetChanged()
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.tracking_listitem_delete_confirmation), Toast.LENGTH_SHORT
-                ).show()
+                val trackingCode = trackingItems[position].codigoDeSeguimiento
+
+                viewModel.removeTrackingCode(trackingCode)
+
+//                // Remove the item from the list
+//                trackingItems.removeAt(position)
+//                // Notify the adapter that the data has changed
+//                adapter.notifyDataSetChanged()
+//                Toast.makeText(
+//                    requireContext(),
+//                    getString(R.string.tracking_listitem_delete_confirmation), Toast.LENGTH_SHORT
+//                ).show()
             }
             .setNegativeButton(getString(R.string.button_cancel)) { dialog: DialogInterface, which: Int ->
                 dialog.dismiss()
