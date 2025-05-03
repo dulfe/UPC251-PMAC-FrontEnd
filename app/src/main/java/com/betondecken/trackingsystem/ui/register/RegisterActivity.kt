@@ -126,14 +126,8 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    //    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        menuInflater.inflate(R.menu.top_app_bar, menu)
-//        return super.onCreateOptionsMenu(menu)
-//    }
-//
-    // Handle the Up button click
     override fun onSupportNavigateUp(): Boolean {
-        onBackPressedDispatcher.onBackPressed() // Navigate back using the back dispatcher
+        onBackPressedDispatcher.onBackPressed()
         return true
     }
 }

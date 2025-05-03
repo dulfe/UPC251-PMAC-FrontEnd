@@ -95,11 +95,11 @@ class TrackingFragment : Fragment() {
                             Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
                         }
 
-                        is TrackingEvent.IsValid -> {
+                        is TrackingEvent.SearchCriteriaIsValid -> {
                             val intent = Intent(context, TrackingSingleActivity::class.java)
                             intent.putExtra(
                                 "codigoDeSeguimiento",
-                                viewModel.uiState.value.trackingCode
+                                event.trackingCode
                             )
                             startActivity(intent)
                         }

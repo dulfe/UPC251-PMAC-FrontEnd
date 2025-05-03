@@ -6,6 +6,7 @@ import com.betondecken.trackingsystem.entities.AccessToken
 import com.betondecken.trackingsystem.entities.DataSourceResult
 import com.betondecken.trackingsystem.entities.NuevoUsuarioInput
 import com.betondecken.trackingsystem.entities.SimpleError
+import com.betondecken.trackingsystem.entities.TokenRefreshRequestInput
 import com.betondecken.trackingsystem.entities.UsuarioResponse
 import com.betondecken.trackingsystem.entities.VerificarCredencialesInput
 import kotlinx.coroutines.delay
@@ -22,68 +23,22 @@ class UserDataSource @Inject constructor(
     suspend fun login(username: String, password: String): DataSourceResult<AccessToken> {
         val response: Response<AccessToken> =
             userApiService.login(VerificarCredencialesInput(username, password))
-
         return response.processResponse(retrofit)
     }
 
     suspend fun refresh(refreshToken: String): DataSourceResult<AccessToken> {
-        // Simular una llamada a la API con un retraso
-        delay(2000)
-
-        // Retornar un ejemplo
-        val token = AccessToken(
-            access_token = "mock_access",
-            scope = "mock_scope",
-            token_type = "mock_type",
-            refresh_token = "fake_refresh",
-            expires_in = 3600
-        )
-        return DataSourceResult.Success(token)
+        val response: Response<AccessToken> =
+            userApiService.refresh(TokenRefreshRequestInput(refreshToken))
+        return response.processResponse(retrofit)
     }
 
     suspend fun whoAmI(): DataSourceResult<UsuarioResponse> {
         val response = userApiService.whoAmI()
-
         return response.processResponse(retrofit)
-
-//        // Simular una llamada a la API con un retraso
-//        delay(2000)
-//
-//        // Retornar un ejemplo
-//        val result = UsuarioResponse(
-//            email = "test@server.com",
-//            estado = "A",
-//            nombres = "Test",
-//            apellidos = "User",
-//            usuarioId = 1,
-//            fechaDeCreacion = OffsetDateTime.now()
-//        )
-//
-//        return DataSourceResult.Success(result)
     }
 
     suspend fun register(user: NuevoUsuarioInput): DataSourceResult<UsuarioResponse> {
-        // Simular una llamada a la API con un retraso
-        delay(2000)
-
-        // Retornar un ejemplo
-        val result = UsuarioResponse(
-            email = user.email,
-            estado = "A",
-            nombres = user.nombres,
-            apellidos = user.apellidos,
-            usuarioId = 1,
-            fechaDeCreacion = OffsetDateTime.now()
-        )
-
-        return DataSourceResult.Success(result)
+        val response = userApiService.register(user)
+        return response.processResponse(retrofit)
     }
-
-//    // Función de ejemplo para parsear el cuerpo de error (ajústala según tu API)
-//    private fun parseError(code: Int, errorBody: String?): SimpleError {
-//        // Aquí podrías usar Gson o Moshi para deserializar el errorBody
-//        // a un objeto de error específico de tu API si es necesario.
-//        // Por ahora, creamos un SimpleError genérico basado en el código de respuesta.
-//        return SimpleError(code.toString(), errorBody ?: "Error HTTP $code")
-//    }
 }

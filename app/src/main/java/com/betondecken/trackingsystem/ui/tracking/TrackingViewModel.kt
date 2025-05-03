@@ -25,7 +25,7 @@ data class TrackingUiState(
 )
 
 sealed class TrackingEvent {
-    data object IsValid: TrackingEvent()
+    data class SearchCriteriaIsValid(val trackingCode: String = ""): TrackingEvent()
     data class Error(val message: String) : TrackingEvent()
     data class TrackingCodeRemoved(val trackingCode: String) : TrackingEvent()
 }
@@ -64,7 +64,7 @@ class TrackingViewModel @Inject constructor  (
 
         // Lanzar una coroutine
         viewModelScope.launch {
-            _events.emit(TrackingEvent.IsValid)
+            _events.emit(TrackingEvent.SearchCriteriaIsValid(currentTrackingCode))
         }
     }
 
