@@ -79,11 +79,11 @@ class UserDataSource @Inject constructor(
         return DataSourceResult.Success(result)
     }
 
-    // Función de ejemplo para parsear el cuerpo de error (ajústala según tu API)
-    private fun parseError(code: Int, errorBody: String?): SimpleError {
-        // Aquí podrías usar Gson o Moshi para deserializar el errorBody
-        // a un objeto de error específico de tu API si es necesario.
-        // Por ahora, creamos un SimpleError genérico basado en el código de respuesta.
-        return SimpleError(code.toString(), errorBody ?: "Error HTTP $code")
-    }
+//    // Función de ejemplo para parsear el cuerpo de error (ajústala según tu API)
+//    private fun parseError(code: Int, errorBody: String?): SimpleError {
+//        // Aquí podrías usar Gson o Moshi para deserializar el errorBody
+//        // a un objeto de error específico de tu API si es necesario.
+//        // Por ahora, creamos un SimpleError genérico basado en el código de respuesta.
+//        return SimpleError(code.toString(), errorBody ?: "Error HTTP $code")
+//    }
 }

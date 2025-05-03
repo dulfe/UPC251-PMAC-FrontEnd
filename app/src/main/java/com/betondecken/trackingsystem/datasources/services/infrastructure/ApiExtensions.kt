@@ -7,7 +7,7 @@ import retrofit2.Converter
 import retrofit2.Response
 import retrofit2.Retrofit
 
-suspend fun <T> Response<T>.processResponse(retrofit: Retrofit): DataSourceResult<T> {
+fun <T> Response<T>.processResponse(retrofit: Retrofit): DataSourceResult<T> {
     if (isSuccessful) {
         return body()?.let { DataSourceResult.Success(it) }
             ?: DataSourceResult.Error(SimpleError("EMPTY_BODY", "Respuesta exitosa pero cuerpo vacío"))

@@ -81,7 +81,7 @@ class LoginViewModel @Inject constructor (
                         sessionManager.setAccessToken(result.data)
 
                         // Obtener el usuario
-                        var userResult = userRepository.whoAmI()
+                        val userResult = userRepository.whoAmI()
                         when (userResult) {
                             is RepositoryResult.Success -> {
                                 sessionManager.setUser(userResult.data)

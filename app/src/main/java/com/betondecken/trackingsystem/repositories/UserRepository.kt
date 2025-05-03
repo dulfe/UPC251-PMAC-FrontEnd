@@ -1,6 +1,5 @@
 package com.betondecken.trackingsystem.repositories
 
-import com.betondecken.trackingsystem.support.SessionManager
 import com.betondecken.trackingsystem.datasources.UserDataSource
 import com.betondecken.trackingsystem.entities.AccessToken
 import com.betondecken.trackingsystem.entities.DataSourceResult
