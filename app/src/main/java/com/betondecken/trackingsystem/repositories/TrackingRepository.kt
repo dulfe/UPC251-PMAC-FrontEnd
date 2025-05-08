@@ -3,6 +3,7 @@ package com.betondecken.trackingsystem.repositories
 import com.betondecken.trackingsystem.datasources.TrackingDataSource
 import com.betondecken.trackingsystem.entities.DataSourceResult
 import com.betondecken.trackingsystem.entities.DetalleDeOrdenResponse
+import com.betondecken.trackingsystem.entities.RastreoEnTiempoRealResponse
 import com.betondecken.trackingsystem.entities.RepositoryResult
 import com.betondecken.trackingsystem.entities.ResumenDeOrdenResponse
 import javax.inject.Inject
@@ -38,6 +39,13 @@ class TrackingRepository @Inject constructor(
 
     suspend fun deleteOrdenPorUsuario(codigoDeSeguimiento: String): RepositoryResult<Unit> {
         return when (val result = trackingDataSource.deleteOrdenPorUsuario(codigoDeSeguimiento)) {
+            is DataSourceResult.Success -> RepositoryResult.Success(result.data)
+            is DataSourceResult.Error -> RepositoryResult.Error(result.error.mensaje)
+        }
+    }
+
+    suspend fun getCurrentLocation(codigoDeSeguimiento: String): RepositoryResult<RastreoEnTiempoRealResponse> {
+        return when (val result = trackingDataSource.getUbicacionActual(codigoDeSeguimiento)) {
             is DataSourceResult.Success -> RepositoryResult.Success(result.data)
             is DataSourceResult.Error -> RepositoryResult.Error(result.error.mensaje)
         }
