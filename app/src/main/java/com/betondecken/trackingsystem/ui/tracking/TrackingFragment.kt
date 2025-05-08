@@ -135,11 +135,11 @@ class TrackingFragment : Fragment() {
             },
             onItemClickListener = { position ->
                 val clickedItem = trackingItems[position]
-                Toast.makeText(
-                    requireContext(),
-                    "Clicked: ${clickedItem.codigoDeSeguimiento}",
-                    Toast.LENGTH_SHORT
-                ).show()
+//                Toast.makeText(
+//                    requireContext(),
+//                    "Clicked: ${clickedItem.codigoDeSeguimiento}",
+//                    Toast.LENGTH_SHORT
+//                ).show()
                 // start activity
                 val intent = Intent(requireContext(), TrackingSingleActivity::class.java)
                 intent.putExtra("codigoDeSeguimiento", clickedItem.codigoDeSeguimiento)

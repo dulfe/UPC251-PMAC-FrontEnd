@@ -3,6 +3,7 @@ package com.betondecken.trackingsystem.ui.trackingsingle
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -167,8 +168,8 @@ class TrackingSingleActivity : AppCompatActivity(), OnMapReadyCallback {
                             if (::_map.isInitialized) {
                                 // Crear la ubicación del marcador
                                 val pos = LatLng(
-                                    data.direccionDeEntregaLatitud, 
-                                    data.direccionDeEntregaLongitud)
+                                    data.direccionDeEntregaLat,
+                                    data.direccionDeEntregaLon)
                                 // Crear el marcador y mover la cámara
                                 _map.addMarker(MarkerOptions()
                                     .position(pos)

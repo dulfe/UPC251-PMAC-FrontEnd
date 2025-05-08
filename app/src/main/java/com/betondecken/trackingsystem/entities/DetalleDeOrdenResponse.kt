@@ -24,6 +24,6 @@ data class DetalleDeOrdenResponse(
     val conductorApellidos: String?,
     val conductorTelefono: String?,
 
-    val direccionDeEntregaLatitud: Double,
-    val direccionDeEntregaLongitud: Double,
+    val direccionDeEntregaLat: Double,
+    val direccionDeEntregaLon: Double,
 )

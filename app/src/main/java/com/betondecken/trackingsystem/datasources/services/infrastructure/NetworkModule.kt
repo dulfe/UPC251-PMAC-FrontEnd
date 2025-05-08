@@ -19,7 +19,8 @@ import java.time.format.DateTimeFormatter
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-    private const val BASE_URL = "https://10.0.2.2:7039/"
+    //private const val BASE_URL = "https://10.0.2.2:7039/"
+    private const val BASE_URL = "https://trackingbackend.azure-api.net/"
 
     @Provides
     @Singleton
