@@ -12,10 +12,13 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.betondecken.trackingsystem.R
 import com.betondecken.trackingsystem.databinding.ActivityHomeBinding
+import com.betondecken.trackingsystem.support.SessionManager
 import dagger.hilt.android.AndroidEntryPoint
+import com.betondecken.trackingsystem.ui.BaseMenuActivity
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : BaseMenuActivity() {
 
     private lateinit var binding: ActivityHomeBinding
 
@@ -31,10 +34,30 @@ class HomeActivity : AppCompatActivity() {
             insets
         }
 
-        setSupportActionBar(binding.myToolbar)
+        setupComponents()
+        setupListeners()
+        observeState()
+        observeEvents()
+    }
+
+    private fun observeEvents() {
+        // Nada por ahora
+    }
+
+    private fun observeState() {
+        // Nada por ahora
+    }
+
+    private fun setupListeners() {
+        // Nada por ahora
+    }
+
+    private fun setupComponents() {
+        setupActionBar()
 
         val navView: BottomNavigationView = binding.navView
-        val navHostFragment = supportFragmentManager.findFragmentById(binding.navHostFragmentActivityHome.id) as NavHostFragment //Use the id from the binding
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(binding.navHostFragmentActivityHome.id) as NavHostFragment
         val navController = navHostFragment.navController
 
         // Esto controlla el comportamiento del ActionBar al cambiar de fragmentos
@@ -47,10 +70,5 @@ class HomeActivity : AppCompatActivity() {
 
         // Esto configura el BottomNavigationView con el NavController y permite la navegación
         navView.setupWithNavController(navController)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.top_app_bar, menu)
-        return super.onCreateOptionsMenu(menu)
     }
 }

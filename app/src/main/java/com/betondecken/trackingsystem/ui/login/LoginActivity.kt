@@ -17,6 +17,7 @@ import com.betondecken.trackingsystem.ui.HomeActivity
 import com.betondecken.trackingsystem.databinding.ActivityLoginBinding
 import com.betondecken.trackingsystem.ui.register.RegisterActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -65,7 +66,11 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.btnForgotPassword.setOnClickListener {
-            Toast.makeText(this, "Un link para cambiar su password se ha enviado a su email.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                "Un link para cambiar su password se ha enviado a su email.",
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
         binding.btnLogin.setOnClickListener {
@@ -81,7 +86,8 @@ class LoginActivity : AppCompatActivity() {
                     binding.btnLogin.isEnabled = !state.isLoading
                     binding.txtEmail.isEnabled = !state.isLoading
                     binding.txtPassword.isEnabled = !state.isLoading
-                    binding.progressBar.visibility = if (state.isLoading) View.VISIBLE else View.GONE
+                    binding.progressBar.visibility =
+                        if (state.isLoading) View.VISIBLE else View.GONE
                 }
             }
         }
@@ -94,9 +100,21 @@ class LoginActivity : AppCompatActivity() {
                 viewModel.events.collect { event ->
                     when (event) {
                         is LoginEvent.Error -> {
-                            Toast.makeText(this@LoginActivity, event.message, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@LoginActivity, event.message,
+                                Toast.LENGTH_LONG)
+                                .show()
                         }
+
                         is LoginEvent.Success -> {
+                            Toast.makeText(
+                                this@LoginActivity,
+                                "Bienvenido ${event.result.nombres}!",
+                                Toast.LENGTH_LONG
+                            ).show()
+
+                            // Introduce un pequeño retraso para que el Toast se muestre antes de la actividad HomeActivity
+                            delay(500)
+
                             val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                             startActivity(intent)
                             finish()

@@ -4,9 +4,10 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.betondecken.trackingsystem.R
+import com.betondecken.trackingsystem.entities.RepositoryResult
 import com.betondecken.trackingsystem.entities.UsuarioResponse
-import com.betondecken.trackingsystem.repositories.UserLoginResult
 import com.betondecken.trackingsystem.repositories.UserRepository
+import com.betondecken.trackingsystem.support.SessionManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,7 +35,8 @@ sealed class LoginEvent {
 @HiltViewModel
 class LoginViewModel @Inject constructor (
     private val application: Application,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val sessionManager: SessionManager
 //) : ViewModel() {
 ): AndroidViewModel(application) {
 
@@ -70,17 +72,33 @@ class LoginViewModel @Inject constructor (
         // Lanzar una coroutine
         viewModelScope.launch {
             try {// Llamar al método login del Repositorio
-                val result: UserLoginResult = userRepository.login(currentEmail, currentPassword)
+                val result = userRepository.login(currentEmail, currentPassword)
 
                 // Manejar el resultado del Repositorio
                 when (result) {
-                    is UserLoginResult.Success -> {
+                    is RepositoryResult.Success -> {
+                        // Poner el token en el SessionManager
+                        sessionManager.setAccessToken(result.data)
+
+                        // Obtener el usuario
+                        val userResult = userRepository.whoAmI()
+                        when (userResult) {
+                            is RepositoryResult.Success -> {
+                                sessionManager.setUser(userResult.data)
+                            }
+
+                            is RepositoryResult.Error -> {
+                                sessionManager.clearSession()
+                                throw Exception(userResult.error)
+                            }
+                        }
+
                         // Emitir el resultado del Repositorio al flujo de eventos
-                        _events.emit(LoginEvent.Success(result.user))
+                        _events.emit(LoginEvent.Success(userResult.data))
                     }
-                    is UserLoginResult.Error -> {
+                    is RepositoryResult.Error -> {
                         // Emitir el error al flujo de eventos
-                        _events.emit(LoginEvent.Error(result.message))
+                        _events.emit(LoginEvent.Error(result.error))
                     }
                 }
             } catch (e: Exception) {

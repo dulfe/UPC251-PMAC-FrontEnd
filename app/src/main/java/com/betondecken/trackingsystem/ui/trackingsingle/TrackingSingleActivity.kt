@@ -1,12 +1,15 @@
 package com.betondecken.trackingsystem.ui.trackingsingle
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Lifecycle
@@ -18,7 +21,10 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.appbar.MaterialToolbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,7 +36,9 @@ import java.util.Locale
 class TrackingSingleActivity : AppCompatActivity(), OnMapReadyCallback {
     private val viewModel: TrackingSingleViewModel by viewModels()
     private lateinit var _map: GoogleMap
+    private var currentMarker: Marker? = null
     private lateinit var binding: ActivityTrackingSingleBinding
+    private var truckIcon : BitmapDescriptor? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,8 +83,9 @@ class TrackingSingleActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+
     private fun setupComponents() {
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        // Obtener el SupportMapFragment y obtener notificado cuando el mapa esté listo para ser utilizado.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -88,10 +97,28 @@ class TrackingSingleActivity : AppCompatActivity(), OnMapReadyCallback {
         // Estas lineas son para mostrar el icono de la flecha de regreso en la barra de herramientas
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+
+        // Cargar el icono del camión
+        truckIcon = ContextCompat.getDrawable(this@TrackingSingleActivity, R.drawable.ic_shipping_truck)?.let {
+            BitmapDescriptorFactory.fromBitmap(it.toBitmap())
+        }
     }
 
     private fun setupListeners() {
-        // No hay listeners por ahora
+        binding.btnStartSimulation.setOnClickListener {
+            if (this.viewModel.uiState.value.isSimulationActive) {
+                Toast.makeText(this, "Simulacion terminada", Toast.LENGTH_SHORT).show()
+
+                viewModel.stopSimulation()
+            }
+            else {
+                Toast.makeText(this, "Simulacion iniciada", Toast.LENGTH_SHORT).show()
+
+                currentMarker?.remove()
+
+                viewModel.startSimulation()
+            }
+        }
     }
 
     private fun observeState() {
@@ -155,6 +182,7 @@ class TrackingSingleActivity : AppCompatActivity(), OnMapReadyCallback {
                                 }
                             }
 
+                            // Actualizar el estado
                             binding.tvStatus.setBackgroundColor(
                                 ContextCompat.getColor(
                                     this@TrackingSingleActivity,
@@ -163,18 +191,50 @@ class TrackingSingleActivity : AppCompatActivity(), OnMapReadyCallback {
                             )
                             binding.tvStatus.text = statusName
 
+                            // Mostrar el boton de simulacion SOLO si el codigo de seguimiento es ABC5202024
+                            if (data.codigoDeSeguimiento == "ABC5202024") {
+                                binding.btnStartSimulation.visibility = View.VISIBLE
+                            }
+
+                            // Actualizar el mapa
                             if (::_map.isInitialized) {
                                 // Crear la ubicación del marcador
                                 val pos = LatLng(
-                                    data.direccionDeEntregaLatitud, 
-                                    data.direccionDeEntregaLongitud)
+                                    data.direccionDeEntregaLat,
+                                    data.direccionDeEntregaLon)
                                 // Crear el marcador y mover la cámara
                                 _map.addMarker(MarkerOptions()
                                     .position(pos)
                                     .title(data.lugarDeEntrega))
-                                _map.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 15f))
+                                _map.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 14f))
 
                             }
+                        }
+                    }
+
+                    // Actualizar el boton de simulacion
+                    binding.btnStartSimulation.text = if (state.isSimulationActive) "Detener" else "Simular"
+
+                    // Actualizar el mapa
+                    if (state.isSimulationActive) {
+                        binding.btnStartSimulation.text = "Detener"
+
+                        if (state.currentLocation != null && ::_map.isInitialized) {
+                            val pos = state.currentLocation
+
+                            Log.d("MapUpdate", "uiState updated: currentLocation = ${state.currentLocation}")
+
+                            currentMarker?.remove()
+
+//                            val truckIcon = ContextCompat.getDrawable(this@TrackingSingleActivity, R.drawable.ic_truck_vector)?.let {
+//                                BitmapDescriptorFactory.fromBitmap(it.toBitmap())
+//                            }
+
+                            currentMarker = _map.addMarker(
+                                MarkerOptions()
+                                    .icon(truckIcon)
+                                    .position(pos)
+                            )
                         }
                     }
                 }

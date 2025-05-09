@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="test@server.com" />
-    <item android:title="Salir" />
+    <item
+        android:id="@+id/mnuUser"
+        android:enabled="false"
+        android:title="[usuario]" />
+    <item
+        android:id="@+id/mnuLogout"
+        android:title="Salir"
+        />
 </menu>

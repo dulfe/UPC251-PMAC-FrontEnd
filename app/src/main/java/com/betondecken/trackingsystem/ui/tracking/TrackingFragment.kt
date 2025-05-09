@@ -95,13 +95,25 @@ class TrackingFragment : Fragment() {
                             Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
                         }
 
-                        is TrackingEvent.IsValid -> {
+                        is TrackingEvent.SearchCriteriaIsValid -> {
                             val intent = Intent(context, TrackingSingleActivity::class.java)
                             intent.putExtra(
                                 "codigoDeSeguimiento",
-                                viewModel.uiState.value.trackingCode
+                                event.trackingCode
                             )
                             startActivity(intent)
+                        }
+
+                        is TrackingEvent.TrackingCodeRemoved -> {
+                            val trackingCode = event.trackingCode
+
+                            // Mostrar mensaje
+                            Toast.makeText(
+                                requireContext(),
+                                //getString(R.string.tracking_listitem_delete_confirmation),
+                                "Eliminado: $trackingCode",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                 }
@@ -123,11 +135,11 @@ class TrackingFragment : Fragment() {
             },
             onItemClickListener = { position ->
                 val clickedItem = trackingItems[position]
-                Toast.makeText(
-                    requireContext(),
-                    "Clicked: ${clickedItem.codigoDeSeguimiento}",
-                    Toast.LENGTH_SHORT
-                ).show()
+//                Toast.makeText(
+//                    requireContext(),
+//                    "Clicked: ${clickedItem.codigoDeSeguimiento}",
+//                    Toast.LENGTH_SHORT
+//                ).show()
                 // start activity
                 val intent = Intent(requireContext(), TrackingSingleActivity::class.java)
                 intent.putExtra("codigoDeSeguimiento", clickedItem.codigoDeSeguimiento)
@@ -148,14 +160,18 @@ class TrackingFragment : Fragment() {
             .setTitle(getString(R.string.tracking_listitem_delete_title))
             .setMessage(getString(R.string.tracking_listitem_delete_question))
             .setPositiveButton(getString(R.string.button_delete)) { dialog: DialogInterface, which: Int ->
-                // Remove the item from the list
-                trackingItems.removeAt(position)
-                // Notify the adapter that the data has changed
-                adapter.notifyDataSetChanged()
-                Toast.makeText(
-                    requireContext(),
-                    getString(R.string.tracking_listitem_delete_confirmation), Toast.LENGTH_SHORT
-                ).show()
+                val trackingCode = trackingItems[position].codigoDeSeguimiento
+
+                viewModel.removeTrackingCode(trackingCode)
+
+//                // Remove the item from the list
+//                trackingItems.removeAt(position)
+//                // Notify the adapter that the data has changed
+//                adapter.notifyDataSetChanged()
+//                Toast.makeText(
+//                    requireContext(),
+//                    getString(R.string.tracking_listitem_delete_confirmation), Toast.LENGTH_SHORT
+//                ).show()
             }
             .setNegativeButton(getString(R.string.button_cancel)) { dialog: DialogInterface, which: Int ->
                 dialog.dismiss()
