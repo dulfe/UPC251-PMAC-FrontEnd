@@ -206,7 +206,7 @@ class TrackingSingleActivity : AppCompatActivity(), OnMapReadyCallback {
                                 _map.addMarker(MarkerOptions()
                                     .position(pos)
                                     .title(data.lugarDeEntrega))
-                                _map.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 14f))
+                                _map.moveCamera(CameraUpdateFactory.newLatLngZoom(pos, 13.5f))
 
                             }
                         }
